@@ -6,8 +6,37 @@ int extraMemoryAllocated;
 
 // implements heap sort
 // extraMemoryAllocated counts bytes of memory allocated
-void heapSort(int arr[], int n)
-{
+void swap(int* a, int* b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void heapify(int arr[], int n, int i) {
+    int largest = i;
+    int left = 2*i + 1;
+    int right = 2*i + 2;
+
+    if (left < n && arr[left] > arr[largest])
+        largest = left;
+
+    if (right < n && arr[right] > arr[largest])
+        largest = right;
+
+    if (largest != i) {
+        swap(&arr[i], &arr[largest]);
+        heapify(arr, n, largest);
+    }
+}
+
+void heapSort(int arr[], int n) {
+    for (int i = n / 2 - 1; i >= 0; i--)
+        heapify(arr, n, i);
+
+    for (int i = n - 1; i > 0; i--) {
+        swap(&arr[0], &arr[i]);
+        heapify(arr, i, 0);
+    }
 }
 
 
@@ -15,6 +44,33 @@ void heapSort(int arr[], int n)
 // extraMemoryAllocated counts bytes of extra memory allocated
 void mergeSort(int pData[], int l, int r)
 {
+	if (l<r)
+	{
+		int q[r-l+1];
+		int i, j, k;
+		int m = (l+r)/2;
+		mergeSort(pData, l, m);
+		mergeSort(pData, m+1, r);
+		for (i=l; i<=m; i++)
+			q[i-l] = pData[i];
+		for (j=m+1; j<=r; j++)
+			q[r+m+1-j-l] = pData[j];
+		i = l;
+		j = r;
+		for (k=l; k<=r; k++)
+		{
+			if (q[i-l]<q[j-l])
+			{
+				pData[k] = q[i-l];
+				i = i+1;
+			}
+			else
+			{
+				pData[k] = q[j-l];
+				j = j-1;
+			}
+		}
+	}
 }
 
 // parses input file to an integer array
