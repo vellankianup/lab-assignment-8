@@ -1,6 +1,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 int extraMemoryAllocated;
 
@@ -107,20 +108,21 @@ int parseData(char *inputFileName, int **ppData)
 // prints first and last 100 items in the data array
 void printArray(int pData[], int dataSz)
 {
-	int i, sz = dataSz - 100;
-	printf("\tData:\n\t");
-	for (i=0;i<100;++i)
-	{
-		printf("%d ",pData[i]);
-	}
-	printf("\n\t");
-	
-	for (i=sz;i<dataSz;++i)
-	{
-		printf("%d ",pData[i]);
-	}
-	printf("\n\n");
+   printf("\tData:\n\t");
+    for (int i = 0; i < 100 && i < dataSz; i++) {
+        printf("%d ", pData[i]);
+    }
+    printf("\n\t");
+    
+    for (int i = dataSz - 100; i < dataSz; i++) {
+        if (i >= 0) {
+            printf("%d ", pData[i]);
+        }
+    }
+    printf("\n\n");
 }
+	
+
 
 int main(void)
 {
